@@ -13,4 +13,12 @@ class Book < ApplicationRecord
   def available?
     borrowings.all?(&:returned_at)
   end
+
+  def overdue?
+    borrowings.where(returned_at: nil).any?(&:overdue?)
+  end
+
+  def due_today?
+    borrowings.where(returned_at: nil).any? { |borrowing| borrowing.return_at == Date.today }
+  end
 end
