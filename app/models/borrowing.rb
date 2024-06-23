@@ -18,6 +18,11 @@ class Borrowing < ApplicationRecord
   end
 
   def user_cannot_borrow_multiple_times
+    if book.nil? || user.nil?
+      errors.add(:borrowed_multiple_times, "please provide valid book and user")
+      return
+    end
+
     if book.borrowed_multiple_times_by?(user)
       errors.add(:borrowed_multiple_times, "user cannot borrow the book more than 3 times")
     end

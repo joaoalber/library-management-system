@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount API::Base, at: "/"
+
   devise_for :users
   resources :users
   resources :books
